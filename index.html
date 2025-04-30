@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Management Dashboard</title>
+  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h3>User Management</h3>
+      <h5>Manage your team members and their account permissions here</h5>
+      <h5>All users <span class="number-of-users">0</span></h5>
+    </header>
+
+    <section class="top-bar">
+      <div class="search-wrapper">
+        <input type="search" placeholder="Search..." />
+        <i class="fas fa-search"></i>
+      </div>
+
+      <button><i class="fa-solid fa-filter"></i> Filters</button>
+      <button id="add-user-button"><i class="fa-solid fa-user"></i> Add User</button>
+      <button><a href="register.html">Register</a></button>
+      <button id="show-login-button">Login</button>
+    </section>
+
+    <section>
+      <div class="table-wrapper">
+        <table border="1" cellpadding="10" cellspacing="0">
+          <thead>
+            <tr class="first-row" >
+              <th><input type="checkbox" /></th>
+              <th>User Name</th>
+              <th>Access</th>
+              <th><i class="fa-solid fa-arrow-down-long"></i> Last Active</th>
+              <th><i class="fa-solid fa-calendar"></i> Date Added</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="user-table-body" data-user-id="THE_USER_ID">
+            <!-- User rows inserted by script.js -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="page-buttons">
+      <button>1</button>
+      <button>2</button>
+    </section>
+  </div>
+
+  <!-- Add User Modal -->
+  <div id="add-user-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Add User</h3>
+      <form id="add-user-form">
+        <label for="username">User Name:</label>
+        <input type="text" id="username" name="username" required /><br />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required /><br />
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required /><br />
+
+        <button type="submit">Add User</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-login-modal">&times;</span>
+      <h2>Login</h2>
+      <form id="login-form">
+        <label for="login-email">Email:</label>
+        <input type="email" name="email" id="login-email" required />
+
+        <label for="login-password">Password:</label>
+        <input type="password" name="password" id="login-password" required />
+
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="scripts.js"></script>
+</body>
+</html>
+
+        

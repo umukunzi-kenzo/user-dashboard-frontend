@@ -1,0 +1,488 @@
+body {
+    background-color: #f9fafb;
+    font-family: 'Inter', sans-serif;
+    flex-wrap: wrap;
+}
+
+/* Header Style */
+.dashboard-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+h3 {
+    margin: 0;
+    font-size: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 6px;
+}
+
+h5 {
+    font-size: 1.2rem;
+    color: #777;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    margin-left: 6px;
+}
+
+/* Top Bar: Search and Button Section */
+.top-bar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 20px;
+    margin-bottom: 5px;
+}
+
+.top-bar input[type="search"] {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+.top-bar button {
+    padding: 0.5rem 0.75rem;
+    color: white;
+    background-color: black;
+    border-radius: 3.5px;
+    cursor: pointer;
+    font-weight: 500;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.top-bar button:hover {
+    background-color: #333; /* Darken the button color */
+    color: #f0f0f0;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px 15px;
+    border-bottom: #111;
+}
+td {
+    border-collapse: collapse;
+    border: none;
+    text-decoration: black;
+}
+
+/* Row Styling */
+.first-row {
+    background-color: #e7f3ff; /* Soft blue for distinction */
+    font-weight: 700; /* Make it bolder */
+    color: #111;      /* Make text darker (blacker) */
+    font-size: 1.05rem; /* Slightly bigger */
+}
+
+ 
+  
+
+tbody tr {
+    border-bottom: 1px solid #ddd;
+  }
+  
+
+th {
+    background-color: #f1f1f1;
+    color: #444;
+    font-weight: bold;
+}
+
+
+tr:hover {
+    background-color: #f9f9f9; /* Subtle hover effect for rows */
+}
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9988px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-right: 0.3rem;
+  }
+.admin {
+     background-color: #d1fae5;
+     color: #065f46; 
+     
+    }
+ .export {
+     background-color: #e0f2fe; 
+        color: #0369a1; 
+    }
+  .import {
+     background-color: #ede9fe;
+     color: #5b21b6; 
+    }
+
+.actions {
+    position: relative;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+/* Dropdown container */
+.dropdown {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    min-width: 140px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: visibility 0s, opacity 0.2s ease;
+}
+
+/* Show class to display dropdown */
+.dropdown.show {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Dropdown buttons */
+.dropdown button {
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 4px;
+}
+
+/* Darker white hover effect */
+.dropdown button:hover {
+    background-color: #eaeaea;
+}
+
+.page-buttons {
+    margin-top: 1.25rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.page-buttons button {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+}
+
+
+.search-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  .search-wrapper input[type="search"] {
+    width: 100%;
+    padding: 10px 12px 10px 36px; /* Extra left padding for icon */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+  
+  .search-wrapper i {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 0.9rem;
+    pointer-events: none; /* Prevent icon from blocking input */
+  }
+  .dropdown button i {
+    margin-right: 8px;
+    color: #666;
+  }
+  .top-bar i {
+    margin-right: 8px;
+     
+  }
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* space between checkbox and image */
+  }
+  
+  .profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+.number-of-users{
+    color: #999;
+    font-size: larger;
+}  
+  
+/* ✅ Make everything responsive on all screens */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+  
+  /* Let content breathe on small screens */
+  .dashboard-header,
+  .top-bar,
+  table,
+  .page-buttons {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Responsive text */
+  h3 {
+    font-size: 1.8rem;
+  }
+  
+  h5 {
+    font-size: 1rem;
+  }
+  
+  /* Stack top-bar vertically on small screens */
+  @media (max-width: 668px) {
+    .top-bar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+    }
+  
+    .search-wrapper {
+      width: 100%;
+      max-width: none;
+    }
+  
+    .top-bar button {
+      width: 100%;
+    }
+  
+    /* Smaller table padding */
+    th, td {
+      padding: 8px;
+      font-size: 0.85rem;
+    }
+  
+    /* Smaller profile image */
+    .profile-img {
+      width: 32px;
+      height: 32px;
+    }
+    
+  }
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+
+ 
+  @media (max-width: 1024px) {
+    .dashboard-header,
+    .top-bar,
+    .table-wrapper,
+    .page-buttons {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    h5 {
+        font-size: 0.9rem;
+    }
+
+    .number-of-users {
+        font-size: medium;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .user-info {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    .dropdown {
+        min-width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    h3 {
+        font-size: 1.25rem;
+    }
+
+    h5 {
+        font-size: 0.8rem;
+    }
+
+    .badge {
+        font-size: 0.7rem;
+    }
+
+    .actions {
+        font-size: 1.2rem;
+    }
+
+    .dropdown button {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+    }
+
+    .page-buttons {
+        flex-wrap: wrap;
+    }
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/* Modal background overlay */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal content container */
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto; /* Adjusted margin for better centering */
+  padding: 20px;
+  border-radius: 10px;
+  width: 280px; /* Slightly smaller to fit better */
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Close button hover effect */
+.close:hover {
+  color: #000;
+}
+
+/* Input fields styling */
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0; /* Reduced margin for closer alignment */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Button styling */
+.modal-content button {
+  width: 100%;
+  padding: 10px;
+  background-color:  #111;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Button hover effect */
+.modal-content button:hover {
+  background-color: #45a049;
+}
+
+
+
+.dropdown {
+  display: none;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.dropdown.show {
+  display: block;
+}
+
+.actions {
+  position: relative;
+}
+
+.three-dots {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+ 
+
+ 
+
+ 
