@@ -90,6 +90,33 @@
     </div>
   </div>
 
+
+<!-- Update User Modal -->
+<div id="update-user-modal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="close-update-modal">&times;</span>
+    <h2>Update User</h2>
+    <form id="update-user-form">
+      <label for="username">Username:</label>
+      <input type="text" name="username" required />
+      <label for="email">Email:</label>
+      <input type="email" name="email" required />
+      <button type="submit">Update</button>
+    </form>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="delete-user-modal" class="modal">
+  <div class="modal-content">
+    <h2>Confirm Deletion</h2>
+    <p>Are you sure you want to delete this user?</p>
+    <button id="confirm-delete-button">Yes, Delete</button><br><br>
+    <button id="cancel-delete-button">Cancel</button>
+  </div>
+</div>
+
+
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="scripts.js"></script>
 </body>

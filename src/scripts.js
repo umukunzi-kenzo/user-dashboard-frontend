@@ -5,14 +5,24 @@ const addUserBtn = document.getElementById("add-user-button");
 const closeModalBtn = document.querySelector(".close");
 const addUserForm = document.getElementById("add-user-form");
 
+
+// Reference modals and buttons
+const updateModal = document.getElementById("update-user-modal");
+const updateForm = document.getElementById("update-user-form");
+const closeUpdateModalBtn = document.getElementById("close-update-modal");
+
+const deleteModal = document.getElementById("delete-user-modal");
+const confirmDeleteBtn = document.getElementById("confirm-delete-button");
+const cancelDeleteBtn = document.getElementById("cancel-delete-button");
+
 // Login modal elements
 const loginModal = document.getElementById("login-modal");
 const showLoginBtn = document.getElementById("show-login-button");
 const closeLoginBtn = document.getElementById("close-login-modal");
 const loginForm = document.getElementById("login-form");
 
-let isAuthenticated = false; // 🌟 New flag to track if the user is logged in
-let loggedInUserId = null; // 🌟 Store logged-in user's ID
+let isAuthenticated = false;
+let loggedInUserId = null;
 
 // Show "Add User" modal
 addUserBtn.onclick = () => {
@@ -54,10 +64,10 @@ async function fetchUsers() {
     userTableBody.innerHTML = "";
     users.forEach(user => renderUser(user));
     document.querySelector(".number-of-users").textContent = users.length;
-    isAuthenticated = true; // 🌟 If fetch succeeds, user is authenticated
+    isAuthenticated = true;
   } catch (err) {
     console.error("Error fetching users:", err.response?.data || err.message);
-    isAuthenticated = false; // 🌟 If fetch fails, user is not authenticated
+    isAuthenticated = false;
     alert("Please login first to access users.");
   }
 }
@@ -122,7 +132,6 @@ addUserForm.onsubmit = async (e) => {
 };
 
 // Login form handler
-
 loginForm.onsubmit = async (e) => {
   e.preventDefault();
   const { email, password } = loginForm;
@@ -138,9 +147,9 @@ loginForm.onsubmit = async (e) => {
     if (res.data) {
       alert("Login successful!");
       loginModal.style.display = "none";
-      isAuthenticated = true; // 🌟 Update flag
-      loggedInUserId = res.data.userId; // 🌟 Store logged-in user's ID
-      fetchUsers(); // Fetch users after login
+      isAuthenticated = true;
+      loggedInUserId = res.data.userId;
+      fetchUsers();
     }
   } catch (err) {
     console.error("Login failed:", err.response?.data || err.message);
@@ -148,7 +157,6 @@ loginForm.onsubmit = async (e) => {
     alert("Login failed. Please check your credentials.");
   }
 };
-
 
 // Dropdown toggle
 document.addEventListener('click', function (e) {
@@ -164,79 +172,68 @@ document.addEventListener('click', function (e) {
 });
 
 // Handle clicks on Update and Delete buttons dynamically
-userTableBody.addEventListener('click', async function (e) {
-  const deleteBtn = e.target.closest('button.delete-btn');
-  const updateBtn = e.target.closest('button.update-btn');
-  const tr = e.target.closest('tr');
+let currentUserId = null;
+
+// Close buttons
+closeUpdateModalBtn.onclick = () => updateModal.style.display = "none";
+cancelDeleteBtn.onclick = () => deleteModal.style.display = "none";
+
+// Handle click outside
+window.onclick = function(e) {
+  if (e.target === updateModal) updateModal.style.display = "none";
+  if (e.target === deleteModal) deleteModal.style.display = "none";
+};
+
+// Handle table actions
+userTableBody.addEventListener("click", function(e) {
+  const updateBtn = e.target.closest("button.update-btn");
+  const deleteBtn = e.target.closest("button.delete-btn");
+  const tr = e.target.closest("tr");
 
   if (!tr) return;
+  const userId = tr.getAttribute("data-user-id");
 
-  const userId = tr.getAttribute('data-user-id');
-
-  if (!isAuthenticated) {
-    alert("Please login first to update or delete users.");
-    return;
-  }
-
-  // Check if logged-in user is the same as the user being updated
-  if (updateBtn && userId !== loggedInUserId) {
-    alert("You can only update your own information.");
-    return;
+  if (updateBtn) {
+    const username = tr.querySelector("strong").innerText;
+    const email = tr.querySelector("span").innerText;
+    updateForm.elements["username"].value = username;
+    updateForm.elements["email"].value = email;
+    currentUserId = userId;
+    updateModal.style.display = "block";
   }
 
   if (deleteBtn) {
-    const confirmDelete = confirm("Are you sure you want to delete this user?");
-    if (confirmDelete) {
-      try {
-        await axios.delete(`${API_BASE}/users/${userId}`, {
-          withCredentials: true
-        });
-
-        tr.remove();
-        alert("User deleted successfully!");
-      } catch (err) {
-        console.error("Failed to delete user:", err.response?.data || err.message);
-        alert("Failed to delete user.");
-      }
-    }
-  }
-
-  if (updateBtn) {
-    const usernameElement = tr.querySelector('strong');
-    const emailElement = tr.querySelector('span');
-
-    if (!usernameElement || !emailElement) {
-      console.error('Username or email elements not found inside the row.');
-      return;
-    }
-
-    const currentUsername = usernameElement.innerText;
-    const currentEmail = emailElement.innerText;
-
-    const newUsername = prompt("Edit username:", currentUsername);
-    const newEmail = prompt("Edit email:", currentEmail);
-
-    if (newUsername && newEmail) {
-      try {
-        await axios.put(`${API_BASE}/users/${userId}`, {
-          username: newUsername,
-          email: newEmail
-        }, {
-          withCredentials: true
-        });
-
-        usernameElement.innerText = newUsername;
-        emailElement.innerText = newEmail;
-        alert("User updated successfully!");
-      } catch (err) {
-        console.error("Failed to update user:", err.response?.data || err.message);
-        alert("Failed to update user.");
-      }
-    } else {
-      alert("Update cancelled. No empty fields allowed.");
-    }
+    currentUserId = userId;
+    deleteModal.style.display = "block";
   }
 });
 
-// 🏁 Do not fetch users immediately — fetch only after login
+// Handle update form submission
+updateForm.onsubmit = async (e) => {
+  e.preventDefault();
+  const username = updateForm.elements["username"].value;
+  const email = updateForm.elements["email"].value;
 
+  try {
+    await axios.put(`${API_BASE}/users/${currentUserId}`, { username, email }, { withCredentials: true });
+    updateModal.style.display = "none";
+    fetchUsers();
+    alert("User updated successfully!");
+  } catch (err) {
+    console.error("Update failed:", err);
+    alert("Failed to update user.");
+  }
+};
+
+// Handle delete confirmation
+confirmDeleteBtn.onclick = async () => {
+  try {
+    await axios.delete(`${API_BASE}/users/${currentUserId}`, { withCredentials: true });
+    deleteModal.style.display = "none";
+    fetchUsers();
+    alert("User deleted successfully!");
+  } catch (err) {
+    console.error("Delete failed:", err);
+    alert("Failed to delete user.");
+  }
+};
