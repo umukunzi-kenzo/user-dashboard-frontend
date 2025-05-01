@@ -219,7 +219,7 @@ updateForm.onsubmit = async (e) => {
     updateModal.style.display = "none";
     fetchUsers();
     alert("User updated successfully!");
-  } catch (err) {
+  } catch (err) { 
     console.error("Update failed:", err);
     alert("Failed to update user.");
   }
