@@ -1,3 +1,13 @@
+// Configure Axios to automatically send the token
+
+axios.interceptors.request.use(config => {
+  const token = localStorage.getItem('KENZO_AUTH'); 
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 const API_BASE = 'http://localhost:3000';
 const userTableBody = document.getElementById("user-table-body");
 const modal = document.getElementById("add-user-modal");
@@ -21,8 +31,10 @@ const showLoginBtn = document.getElementById("show-login-button");
 const closeLoginBtn = document.getElementById("close-login-modal");
 const loginForm = document.getElementById("login-form");
 
-let isAuthenticated = false;
+ let isAuthenticated = false;
 let loggedInUserId = null;
+
+axios.defaults.baseURL = 'http://localhost:3000';
 
 // Show "Add User" modal
 addUserBtn.onclick = () => {
@@ -130,7 +142,7 @@ addUserForm.onsubmit = async (e) => {
     alert("Failed to add user.");
   }
 };
-
+ 
 // Login form handler
 loginForm.onsubmit = async (e) => {
   e.preventDefault();
@@ -143,6 +155,13 @@ loginForm.onsubmit = async (e) => {
     }, {
       withCredentials: true
     });
+    const token = res.data.sessionToken;
+    localStorage.setItem("KENZO_AUTH", token);
+    alert("Login successful!");
+    loginModal.style.display = "none";
+    isAuthenticated = true;
+    loggedInUserId = res.data.userId;
+
 
     if (res.data) {
       alert("Login successful!");
@@ -156,7 +175,7 @@ loginForm.onsubmit = async (e) => {
     isAuthenticated = false;
     alert("Login failed. Please check your credentials.");
   }
-};
+}; 
 
 // Dropdown toggle
 document.addEventListener('click', function (e) {
