@@ -77,6 +77,23 @@ function renderUser(user) {
   const tr = document.createElement("tr");
   tr.setAttribute('data-user-id', user._id);
 
+  
+ const formatDate = (dateString) => {
+    if (!dateString) return "Recently";
+    const date = new Date(dateString);
+    return date.toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const lastActiveDisplay = 
+  user.isOnline ? "Active now" : formatDate(user.lastActive);
+
+  
   tr.innerHTML = `
     <td><input type="checkbox" /></td>
     <td>
@@ -87,8 +104,8 @@ function renderUser(user) {
       <span>${user.email}</span>
     </td>
     <td><span class="badge admin">Admin</span></td>
-    <td>Just now</td>
-    <td>Just now</td>
+    <td>${formatDate(user.lastActive)}</td>
+    <td>${formatDate(user.createdAt)}</td>
     <td class="actions">
       <span class="three-dots">⋮</span>
       <div class="dropdown">
